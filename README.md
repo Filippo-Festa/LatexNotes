@@ -1,2 +1,1 @@
-# LatexNotes
- Handwritten notes in latex
+# Latex Notes
