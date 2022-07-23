@@ -1,0 +1,244 @@
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+
+\lesson{5}{14/10/20}
+Let's see another application for the equation used to compute the average exit time: in the last lesson we derived an exact equation for the AET
+Average exit time, $\beta:=(k_B T)^{-1}$:
+\begin{align}
+     \mean{\mathbb{T}(x)}= \frac{1}{D}\int_x^{x_B}dy\exp(\beta U(y))\int_{x_{1}} ^{x_M} dz \exp(-{\beta U(z)})
+\label{eq:AET}
+\end{align}
+
+Where $x$ is the starting point of the brownian particle, in $x_B$ we placed the absorbing boundary and $x_1$ is the  reflecting boundary. \\
+An application of equation (\ref{eq:AET}) can be found in the computations of \textit{Polymers' translocation time}: the general idea is that we have a wall with a hole separating in half spaces and our polymer is translocating going from the left to the right, as shown in *****.
+\begin{center}
+    METTI FIGURAaaaa
+\end{center}
+We define as:
+\begin{itemize}
+    \item $N$: total number of monomers;
+    \item $n$: number of already translocated monomers;
+    \item $F(n)$: effective free energy;
+    \item $D(n)$: effective diffusion coefficient.
+\end{itemize}
+The variable $n$ is an example of \textit{reaction coordinate} and in principle the idea is to derive an \textit{effective free energy} as a function of the translocated monomers; along with the effective free energy one can derive an \textit{effective diffusion coefficient} $D(n)$. \\
+
+Here the idea is to study what happened in the $1d$ space
+as a function of $n$ using the FP formalism obtaining an expression that is very similar to (\ref{eq:AET}):
+\begin{eqnarray}
+    \tau=\int_{\hlc{red}{1}} ^{\hlc{blue}{N-1}} dn \frac{\hlc{green}{b^2}}{D(n)}\exp(\beta F(n))\int_{\hlc{violet} {1}}^{n} dm\exp(-\beta F(m))
+\end{eqnarray}
+
+where $\tau$ is the \textit{average translocation time} (which is a random variable) and the map colour is referred to:
+\begin{itemize}
+    \item \textcolor{blue}{Blue}: absorbing boundary condition (end of the chain);
+    \item {\textcolor{red}{Red}}: starting point;
+    \item  \textcolor{green}{Green}: unit length of a monomer (length scale associated to a single monomer);
+    \item \textcolor{violet}{Violet}: reflective boundary condition (start of the chain).
+\end{itemize}
+
+Here we are assuming that the only important parameter is the reaction coordinate (coarse-graning approach) and we are using the effective free energy as if we were dealing with an external potential energy.
+
+\chapter{Markov chains}
+
+\section{Markov chains (Markov process)}
+So far, discussing the Langevin and FP approaches we considered \textit{continuous time stochastic processes} and also \textit{space} was a continuous variable. 
+
+Now we will move to stochastic processes with discrete time and discrete state space. \\
+
+We define $x(t)$ as a stochastic random variable that will be chosen in a discrete (finite) space state, so $x\in S=\{S_A, \dots, S_N\}$\footnote{We will also generalize for $N\to\infty$.} and we will label time such as: $t=1,2,\dots,n,\dots$.
+
+The basic quantity we are interested in is the \textit{probability} that (at a given time $t$) our process takes the value $S_i$: 
+\begin{eqnarray}
+p(x(t)=S_i)=p_i(t)
+\end{eqnarray}
+
+The probability $p_i(t)$ doesn't depend on previous events and that means that there is \textbf{no correlation}, so stochastic processes have no memory. \\
+
+
+The next step is to introduce some correlations: we will introduce memory in such a way that the probability depends on the previous history of a stochastic process.
+In general we can deal with conditional probabilities such as\footnote{The notation $S_{i_1}$ with the $i_1$ index has the meaning of "state at (t-1)".}:
+\begin{eqnarray}
+    \Omega(x(t)=S_i|x(t-1)=S_{i_1}; x(t-2)=S_{i_2},\dots,x(t-n)=S_{i_n})
+\end{eqnarray}
+where I decided to stop the memory at time $(t-n)$. This is a general way to take into account of what happens in a process with memory $n$. \\
+
+When we talk about of a\textit{Markov process/chain}, this means that memory is restricted just to the previous step, so $n=1$. The conditional probability takes this form:
+\begin{eqnarray}
+    \Omega(x(t)=S_j|x(t-1)=S_i) := W_{ji}
+\end{eqnarray}
+where $W_{ji}$ are the \textit{transition rates}\footnote{To be more precise they are probabilities but since $\Delta t = 1 $ we can call $W_{ji}$ rates in analogy to FP.} and the index $i$ is the initial state, $j$ the arrival one.
+
+\subsection{Homogeneous MC}
+In order to specify a MC I need to specify the transition rates. In the most general case the rates can depend on time but we won't consider it: we will consider only \textit{homogeneous MC}, where the rates $W_{ij}$ don't depend on time. We can see the elements we introduced previously ($p,W$) as:
+\par\medskip
+
+$p_i(t)\to \text{\textit{probability vector} (N elements)} \implies
+\begin{cases}
+\sum_{i=1} ^N p_i(t)=1 \,\,\forall t \\
+p_i (t) \geq 0 \,\forall i,t
+\end{cases}$
+
+$W_{ij}(t)\to \text{\textit{stochastic matrix }(N $\times$ N elements)} \implies
+\begin{cases}
+\sum_{i=1} ^N W_{ij}(t)=1 \,\,\forall j \\
+W_{ij} \geq 0 \,\,\forall i,j
+\end{cases}$
+
+\par\bigskip
+
+When we specify the stochastic matrix, I know everything about the MC and in particular I can express the:
+
+\paragraph{Stochastic dynamic rule}:
+In order to know what is the probability of being the state $j$ we have to sum all over the possible previous states multiplying the corresponding probability $p_i$ for the probability to go from $i$ to $j$ (our transition rate):
+\begin{eqnarray}
+    p_j(t+1)=\sum_i W_{ji} p_i(t) \to \Vec{p}(t+1)=W\Vec{p}(t)
+    \label{eq:MC}
+\end{eqnarray}
+
+We can iterate the expression (\ref{eq:MC}) for $n$ steps and what we get is: 
+
+\begin{eqnarray}
+    \Vec{p}(t+n)=W^n \Vec{p}(t)   
+\end{eqnarray}
+
+one can show that $W^n$ is a stochastic matrix again, so:
+
+\begin{align}
+    W^n \Vec{p}(t)=W^n W^t \Vec{p}(0) =W^{n+t}\Vec{p}(0)
+\end{align}
+
+And from here we can get the \textbf{CK equation} for discrete processes:
+\begin{equation}
+    \boxed{W^{n+t} = W^n W^t}
+    \label{eq:CKMC}
+\end{equation}
+
+How can we study in general the properties of a MC?
+
+All the properties of a MC are stored in the $W_{ji}$ matrix, so we will consider an eigenvalue problem for $W$: $det(W-\lambda \mathbb{1})=0$.
+
+There is a complication: the stochastic matrix $W$ in general is \textbf{not} symmetric:, so the eigenvalues may be complex and we must distinguish between right and left eigenvectors.
+
+\begin{eqnarray}
+    W\Bar{w}^{(\lambda)}=\lambda \textcolor{blue}{\Bar{w}^{(\lambda)}} \qquad \text{\textcolor{blue}{right eigenvector associated to the EGV}} \quad \lambda
+\end{eqnarray}
+
+One can prove (for $W$ stochastic matrix):
+\begin{enumerate}
+    \item $|\lambda|\leq 1$;
+    \item At least one EGV is real and $\lambda = 1$;
+    \item If $\Bar{w}^{(\lambda)}$ for $\lambda\neq 1 \implies \sum_i w_i^{(\lambda)}=0$.
+\end{enumerate}
+
+Point (2) is fundamental because the corresponding right eigenvector $\Bar{w}^{(1)}$ is a \textit{stationary distribution} for the Markov chain. 
+
+The eigenvalue equation for the case $\lambda=1$ becomes:
+\begin{eqnarray}
+        W\Bar{w}^{(1)}= {\Bar{w}^{(1)}}\quad \implies \quad \text{if}\quad \Bar{p}(0)=\Bar{w}^{(1)}, \quad \Bar{p}(t)=\Bar{p}(0) \, \forall t
+\end{eqnarray}
+In this case the probability vector stays the same for all times; this is why all the focus in dealing with MC properties is looking for the stationary distributions. \\
+
+Let's now state the properties of MC (and stochastic matrices) in order to study the conditions for \textbf{uniqueness} and \textbf{convergence} to stationary distributions.
+
+\begin{enumerate}
+    \item \textbf{Accessibility}: the state $S_j$ is said to be 'accessible' from another state $S_i$  if it is possible to go from one state to another in a finite time, i.e. $\exists \,t>0 | (W^t)_{ji}>0$;
+    \item \textbf{Irreducibility}: MC is said to be 'irreducible' if all states are accessible from any other state;
+    \item \textbf{Period}: we say that a given state $S_i$ has a period\footnote{The term 'gdc' stays for \textit{greatest common divisor}.}
+    \begin{eqnarray}
+    T:=gcd\{t>0|(W^t)_{ii}>0\}
+    \end{eqnarray}
+    So we consider all possible times such that I have a finite probability to go back to the same state.
+    If $T=1$ we say that state $S_i$ is \textit{aperiodic}, while a whole MC is aperiodic if all states are aperiodic. If a MC is irreducible then all states share same T;
+    \item A state $S_i$ is \textbf{persistent (recurrent)} if the probability to return to $S_i$ in finite time is 1.
+    
+    Let's call $T_i = $ the \textit{first return time} to $S_i$ (random variable): 
+    \begin{eqnarray}
+            T_i:=inf\{t\geq1|x(t)=S_i\} \quad \text{given}\quad x(0)=S_i
+            \label{eq:period}
+    \end{eqnarray}
+    Let's define the probability\footnote{This is not a PDF because we are in the case with discrete time.} $q_i^{(n)}$ that $T_i=n$ given that we are starting at $x(0)=S_i$ such that: 
+    \begin{eqnarray}
+            \sum_i^{\infty} q_i^{(n)} = 
+            \begin{cases}
+                =1 \to \text{recurrent/persistent} \\
+                <1 \to \text{transient\footnote{It means that is not true that always $S_i\to S_i$ in a (finite) time $t$.}}
+            \end{cases}
+            \end{eqnarray}
+    \item \textbf{Positive-Recurrent}: the distinction between recurrent and positive-recurrent is possible only for an infinite-state space; if $N<\infty$ recurrent $\implies$ positive-recurrent.
+    
+    We define as \textit{mean recurrence time}:
+    \begin{eqnarray}
+\mean{T_i}=\sum_{n=1}^{\infty}nq_i^{(n)} \quad
+\text{(this makes sense only for recurrent stages)}
+\end{eqnarray}
+    If $\mean{T_i} < \infty \implies S_i$ is called \textbf{positive-recurrent}. If $N=\infty$ positive-recurrent $\implies$ recurrent but not viceversa.
+    
+    In the end, a MC is (\textbf{pos})\textbf{-recurrent} if all states are (pos)-recurrent.
+    In other words recurrent means that we can ensure that the process always go back to the initial state in a finite time and if it is true for all states then the whole MC is recurrent; positive-recurrent means that the process is recurrent and the average of return time is finite. A MC is positive recurrent if its states are all positive-recurrent. 
+\end{enumerate}
+
+\paragraph{Theorem 1: Uniqueness} 
+If we have an \textit{irreducible} and \textit{positive-recurrent} MC then we can prove that a unique stationary distribution exists.
+
+\begin{eqnarray}
+        W\Bar{w}^{(1)}\overset{\text{stat.}}{=}\Bar{w}^{(1)} \quad \overset{\text{Th. 1}}{\implies} \quad W_i^{(1)}=\frac{1}{\mean{T_i}}>0
+\end{eqnarray}
+
+which we know it's finite because the MC is pos-recurrent.
+
+\paragraph{{Theorem 2: Convergence}} For an ergodic\footnote{Irreducible, positive-recurrent and aperiodic.} MC it can be proved that
+        $\Vec{p}(t)$ {converges to the unique stationary distribution $\Bar{w}^{(1)}$ (that we know for sure it exists thanks to Th. 1)} {for any choice of the initial condition} $\Bar{p}(0)$. 
+        
+        Formally:
+\begin{eqnarray}
+        \forall \vec{p}(0),\, \forall j \quad \sum_i(W^n)_{ji}\, {p}_i(0)=p_j(n) 
+\end{eqnarray}
+And the theorem states that:
+\begin{eqnarray}
+        \boxed{\lim_{n\to\infty} p_j(n)=w_j^{(1)}}
+\end{eqnarray}
+
+Given this convergence, from a physical prospective, if ergodicity holds it allows us to exchange \textit{ensamble averages} with \textit{time averages}.
+
+As a matter of fact one can show (\textbf{Th. 2 corollary}) that for a generic observable f it is actually true that the ensamble average ($\mean{.}$) is equal to the time average ($\Bar{.}$): 
+\begin{eqnarray}
+        \mean{f}=\Bar{f}
+\end{eqnarray}
+Formally:
+\begin{align}
+     \sum_i f(x_i)w_i^{(1)} = \lim_{t\to\infty}\frac{1}{t}\sum_{i=1}^{t}f(x(t))
+\end{align}
+This at the base of the use of MC in the context of numerical simulations (\textit{Monte Carlo simulations}): the goal of a simulation is to compute an average thermodinamic value at a thermal equilibrium and simulate a MC in my computer such that the stationary distribution is the Boltzmann distribution.
+
+If  was able to set up an ergodic MC then I can compute the ensable average over the Boltzmann distribution just using the time average over the states that my simulation is sampling. \\
+
+Going back to \textbf{Th. 1} we know that: 
+\begin{align}
+    \boxed{\mean{T_j} =\frac{1}{w_j^{(1)}}}   
+    \label{eq:kac}
+\end{align}
+and this relation is called \textbf{Kac's lemma}: the less time it takes to go back to the same state the more probable will be to visit the state, therefore the corresponding component in the stationary distribution will be larger. \\
+
+Let us introduce a new quantity, $T_j^{(n)}$, which is the n-th return time to state $S_j$ i.e. is the time needed to return to $S_j$ the n-th time after the (n-1)-th visit.
+
+The total time instead is called $\mathbb{T}_M$: it's the total time needed to visit state $S_j$ M times. From the way we described those two quantities we can relate them such that:
+
+\begin{eqnarray}
+\mathbb{T}_M \sum_{n=1}^M T_j^{(n)}
+\end{eqnarray}
+
+Moreover, let's define $\Phi_j (\mathbb{T}_M)$ as the fraction of time spent in $S_j$ during time $\mathbb{T}_M$. Putting together all the definitions that we introduced previously:
+
+\begin{eqnarray}
+        \Phi_j(\mathbb{T}_M)=\frac{M}{\mathbb{T}_M}
+\end{eqnarray}
+and then we can state that:
+\begin{eqnarray}
+        \mean{T_j}\overset{\text{time average}}{=} \lim_{M\to\infty} \frac{\mathbb{T}_M}{M}= \lim_{M\to\infty}\frac{1}{\Phi_j(\mathbb{T}_M)}\overset{\text{ensamble average}}{=}\frac{1}{w_j^{(1)}}
+\end{eqnarray}
+This relation shows us how (\ref{eq:kac}) is related to the connection between time average and ensamble average in a non trivial way.
+
+\end{document}

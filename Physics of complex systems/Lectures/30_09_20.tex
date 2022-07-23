@@ -1,0 +1,120 @@
+%&latex
+%
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+
+\section{Notion of complexity}
+\lesson{1}{30/09/2020}
+In order to talk about notion of complexity we will look at three different papers:
+\begin{itemize}
+    \item Anderson "more is different" and "emergence"
+    \item Goldenfeld and Kadanoff: "structure with variations", "complexity vs. chaos", universality allows choice of "most convenient minimal model"
+    \item Newman: survey of complex systems; examples and theories
+\end{itemize}
+
+\subsection{Anderson's "More is different"}
+
+To introduce the concept of \textit{complexity} we will start looking at the Anderson's critique of the \textit{reduction hypothesis}: dividing research in \textbf{intensive} basic research and \textbf{extensive} applied research he states that \textit{reductionism} is different from \textbf{constructionism}.
+
+In other words we may know everything about \textit{simple fundamental laws} but does not imply the ability to reconstruct the actual behaviour of the universe.
+
+\begin{center}
+    \textbf{Simple fundamental laws} $\neq$ \textbf{behaviour of the universe}
+\end{center}
+
+\medskip
+
+But why is that? There are two main problems that are due to this disconnection:
+\begin{itemize}
+    \item \textbf{Scale}: at a first glance this problem seems to be very practical because of the high number of microscopic constituents necessary to describe an ordinary piece of macroscopic matter ($\sim 10^{23}$) $\to$ this leads to \textit{Statistical Mechanics}.
+    Another important problem related to the scale of the system is due to the \textit{available amount of computer power}: we may think that this is not a real problem (again, only a practical one). The real problem is the following. 
+    \item \textbf{Complexity}: the point is that we have an emergent behaviour if we deal with a very large number of elementary units what happens is that at macroscopic level we observe \textit{novel emergent behaviours } of the system taking place.
+    In other words this \textit{complex emergent behaviour can't be understood as a simple extrapolation from small systems}.
+\end{itemize}
+
+What follows from these points is a \textbf{hierarchy} of complexity levels where -at each level of complexity- there is a new novel emergent property.
+
+\medskip
+
+As we can read from Anderson's paper \textit{More is Different} we can't say that \textbf{solid state physics} is just applied \textbf{elementary particle physics} or that \textbf{cell biology} is just applied \textbf{molecular biology}: let's explore the first example.
+
+\par
+\begin{center}
+    Elementary particles $\to$ Solid state physics
+\end{center}
+
+From the prospective of elementary particle physics the aim is to solve the Schr\"{o}dinger equation but in the 60s physicist discovered the whole idea of \textit{phase transitions}: this emergent property happends at the thermodynamic limit.
+What is the general lesson that we can learn from phase transitions? In general we discover phase transitions from disordered "fully symmetric\footnote{Meaning: displaying the full symmetry that is present in the simple elementary laws.}" phase (typically \textbf{time} and \textbf{space} invariance).
+
+What we have learnt is that this symmetry is broken (in these transitions) to an \textbf{ordered phase } with a reduced symmetry.
+This is a quite general statement: we can think of the mechanism by which the Higg's boson produces the masses of particles, of the transition phases in the Ising model and of crystals.
+
+Crystals are object whose full space invariance is lost but it maintains some discrete symmetries.
+The key point here is the \textbf{spontaneous symmetry breaking}, a novel idea that we came up with while studying those particular systems.
+
+These are some example of what Anderson's \textbf{emergent problems}.
+
+\subsection{Goldenfeld and Kadanoff's "Simple Lessons from Complexity"}
+In the second paper the basic idea is that we are dealing again with big systems whose elementary units follow simple elementary laws but the result of that is that the world we observe is \textbf{complex} and \textbf{chaotic}.
+What does \textit{complex} mean according to Goldenfeld and Kadanoff? \\
+
+To them \textit{complexity} is associated to what they call "structure with variations". Here follow two examples of this concept:
+\begin{itemize}
+    \item \textbf{Cells in different tissues} in an organism: at the very beginning are equal because they all start from the same genetic information encoded in the DNA but neurons have a very different shape from muscle cells and so on. The important point is that at the beginning the elementary basic rules are the same.
+    \item \textbf{Turbulence}: we have a fluid made up of molecules/atoms and we know the simple rules by which the different molecules/atoms can bind (?) each other but at the very end we can have a turbulent regime and we can see very complex patterns, each time different from the previous one (this is the structure variation).
+\end{itemize}
+
+To sum up: the basic rules can be the same but do observe a great variety of possible complex structures.
+
+\medskip
+
+\textbf{Chaotic} instead refers to the \textit{sensitive dependence} on \textit{initial conditions}: even in the case of deterministic systems where we know the rules and even if we know how to solve the equations, still in chaotic regime changing by a very small amount the initial conditions will produce a very different behaviour. 
+
+A chaotic systems however still have some properties that can be predicted: an example is climate but we can predict the existence of seasons. Again the point (similarly to Anderson) is that complexity may emerge (or does emerge) from very simple ingredients: for example we can setup a very simple computer simulation with three general rules
+\begin{enumerate}
+    \item \textit{local interactions of atoms};
+    \item \textit{conservation laws} [for a fluid: particle number, momentum];
+    \item \textit{symmetry} [rotational invariance],
+\end{enumerate}
+
+As we have from point 1 to 3 we do observe emergent turbulent behaviour INDEPENDENT OF DETAILS (very important point to stress). This is not  a trivial thing and that's what people refers to with the expression \textit{no model chaos}: the behaviour of a simulation is not crucially depending on the details of how we define rules in our simulation on in our theoretical model. \\
+This can be summarized as \textbf{universality} $\to$ independence on details at microscopic scale.
+
+But why is it so? Why do we observe that there is no model chaos?
+
+\subsubsection{No model chaos}
+We do observe no model chaos because in the systems that we are studying we have what physicist call \textit{separations of length,time, energy scales}. This is the real reason why what happens at the macroscopic level does not depend too much on the microscopic details. Let's see and example of this:
+\paragraph{Brownian motion}
+the whole idea of Einstein to describe brownian particles is based on the separation between  what happens in the \textbf{\textit{collision time scale}} and the \textbf{\textit{dissipative time scale}}. If this separation didn't exist then a theory of brownian motion would not be possible.
+\medskip
+The crucial point is that if our goal is to develop a theory to describe the property of a complex system (with a large number of units) then the universality feature tells us that out game should be to model our system with a correct level of details: we must discard the detail that are irrelevant for the properties of the system that we wish to model and maintain the features (such as in the case of turbulent fluids the previous 1 to 3 points) that are crucial to the behaviours that we want to describe.
+
+\begin{center}
+    We must chose the relevant details in a model description
+\end{center}
+
+This depends on the kind of systems that we are studying but also on the kind of questions that we want to ask.
+
+\subsection{Newmann's "A survey of complex systems"}
+When physicist refers to complex systems, each of us think very different systems: it is an immense field! For example:
+\begin{itemize}
+    \item Networks;
+    \item Dynamical systems (typical approach in studying complex systems, chaotic behaviour and bifurcation theory);
+    \item Discrete dynamics (cellular automata - CA: we place objects on a lattice and then we define some interactions and update tools letting the simulation go);
+    \item \textbf{Scaling and criticality} (existence of power law behaviour, especially in the context of non-equilibrium phase transitions);
+    \item Adaptation (complex adaptive systems and game theory);
+    \item \textbf{Information theory} (pattern detection/pattern communication: a pattern is such exactly because it tells a low information content);
+    \item \textbf{Computational complexity}  (polynomial vs. NP-complete problems);
+    \item Agent-based models.
+\end{itemize}
+
+
+
+
+
+
+
+
+\end{document}

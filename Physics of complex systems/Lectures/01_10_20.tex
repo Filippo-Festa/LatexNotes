@@ -1,0 +1,136 @@
+%&latex
+%
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+\section{Random walk and brownian motion}
+\lesson{2}{01/10/2020}
+
+\subsection{Reference books and important concepts}
+\subsubsection{Livi - Politti}
+Reference book: \textit{Non equilibrium statistical physics: a modern perspective} by Livi and Politi:
+From chapter one is important to check Brownian motion, Langevin, FP, FP formalism in order to calculate the escape time from an energy barrier, which leads to Arrhenius equation. 
+We will treat the issue on Markov chains (always chapter one), master equations, detailed balance condition.
+From chapter two we will look at \textit{linear response theory} and the connection of LRT with transport phenomena. the central issue in LRT is the idea that we have a weak perturbation driving the system out of equilibrium behaviour, it can be described in terms of equilibrium correlation function (computed in thermodynamic equilibrium). Actually the point is that, using LRT, one can derive some equations known as\textit{ Kubo relations} (or\textit{ Green-Kubo relations}) such as:
+\begin{eqnarray}
+D=\lim_{t\to\infty} \int_0 ^{t}d\tau <v_x(t)v_x(0)>
+\end{eqnarray}
+The diffusion coefficient is a quantity related to a transport phenomena and can be actually expressed using the Kubo relation in a way that involves equilibrium velocity correlation function. \\
+We will then talk about:
+\begin{itemize}
+    \item \textit{Kramers-Kronij relations} which are the either way to express the fluctuation-dissipation theorem;
+    \item \textit{Osager theory} and \textit{Osager repression relation} (always in the weak perturbation limit). The idea here is to study the coupling between different observables
+    \item \dots
+\end{itemize}
+
+\subsubsection{Mezad - Montanari}
+
+Qui continua a parlare di cosa guardare nel libro \dots
+
+Poi nella seconda parte useremo il libro su informazione e computazione che si chiama: mezad montanari \\
+
+Introduzione seconda parte
+
+%\chapter{MOTP}
+
+\subsection{Random Walk}
+A typical way of defining a random walk is to define a single step: we deal with a sequence of steps labeled by $i$, the step $i$ has a length $l_i$ and proceeds along a given direction:
+
+\begin{eqnarray}
+\Vec{x_i}=l_i\hat{x_i}
+\end{eqnarray}
+
+We will sample the length of each step $i$ from a probability distribution $g(l)$, which is the normalized PDF. 
+
+We are interested in the total movement $\Vec{X}$, defined as the sum of all steps:
+
+\begin{eqnarray}
+\Vec{X}=\sum_{i=1}^N\Vec{x_i}
+\end{eqnarray}
+In particular, we are interested in the squared distance:
+
+\begin{eqnarray}
+X^2=\Vec{X}\cdot\Vec{X}=\sum_{ij} \Vec{X_i}\cdot\Vec{X_j}\overset{(a)}{=}\sum_ix_i^2+\sum_{i\neq j}\Vec{x_i}\cdot\Vec{x_j}
+\end{eqnarray}
+
+where in (a) we split into terms the diagonal terms. Let us now consider an average over different realizations: the idea is that the step direction is chosen \textit{randomly} at each step and the most important thing it is that is chosen independently on the previous steps. More formally:
+\begin{eqnarray}
+\Vec{x_i}\cdot\Vec{x_j}=l_il_j\cos(\theta_{ij})
+\end{eqnarray}
+where $\theta_{ij}$ is the angle between the two directions. To sum up now at each step I chose the length of a step from a PDF AND the random angle direction independently from the previous choices. \\
+
+Let's now consider the average over different realizations
+\begin{eqnarray}
+\mean{X^2}=\Vec{X}\cdot\Vec{X}=\sum_i\mean{x_i^2}+\sum_{i\neq j}\mean{\Vec{x_i}\cdot\Vec{x_j}} \overset{(b)}{=} \sum_{i=1}^N\mean{l_i^2}=N\mean{l^2}
+\end{eqnarray}
+
+where in (b) the term $\sum_{i\neq j}\mean{\Vec{x_i}\cdot\Vec{x_j}}=0$ is due to the assumption of independence in the choice of direction for each step because there is no correlation between difference steps on average.  \\
+
+Let's say now that the PDF $g(l)$ is a \textit{poisson distribution}:
+\begin{eqnarray}
+g(l)=\frac{1}{\lambda}e^{-\frac{l}{\lambda}}
+\end{eqnarray}
+In the contest of kinetic theory $\lambda$ is known as the \textbf{mean free path} (the average length of each step) because if we evaluate the average value of l given the poisson distribution we get $\mean{l}=\lambda$.
+
+Let's introduce the total length travelled by the walker on average\footnote{I.e. the sum of all steps, which is different from $X^2$: the latter is the final distance at which the walker is found from the starting point. In (c) we defined the average velocity, but it is also a trick to introduce time in this formulation of the random walk problem.}:
+\begin{eqnarray}
+\mean{L}=\lambda N \overset{(c)}{:=} \mean{v}t 
+\end{eqnarray}
+If we are interested in the average value of $\mean{l^2}=2\lambda^2$ and in the MSD of the total distance travelled by the random walker from the starting point of the random walk as a function of time:
+\begin{eqnarray}
+\mean{X^2}=2N\lambda^2=2 \lambda\mean{v}t=2dDt
+\end{eqnarray}
+
+where $d$ is the space dimension  and $D:=\lambda<v>$ is the \textbf{diffusion coefficient}. In this way we have found the expected diffusion behaviour. In this way we can connect the diffusion coefficient with $\lambda$ and with the average velocity. \\
+
+Let's make now an example with an air molecule @$T=20^{\circ}C$: we can divide the average velocity from the Maxwell velocities distribution:
+\begin{eqnarray}
+\mean{v}=\sqrt{\frac{8T}{\pi m}} \sim 450 m/s
+\end{eqnarray}
+
+where $m$ is the mass of the molecule and assuming \textit{as in the rest of the course} $k_B=1$.
+Then, from kinetic theory, we can derive the following equation:
+\begin{eqnarray}
+\lambda=\mean{v}\tau=\frac{1}{\sqrt{2}n \sigma}
+\end{eqnarray}
+where $\sigma=4\pi r^2$ is the collision cross section (with $r$ molecular size $\sim$ radius if the molecule is spherical) and $n$ is the density (we can calculate it from the perfect gas law). At this point we can estimate the mean free path $\lambda\sim 60\, nm$;: $\tau$  is called instead \textbf{collision time} and it's the typical time between subsequent collisions in the gas which is of the order of $\sim \mathcal{O}(10^{-11})\,s$. 
+In the end we can estimate $D\sim9\, mm^2/s$ for a molecule in a gas.
+
+\subsection{Brownian motion}
+We are dealing now with mesoscopic\footnote{Much larger than the size of the fluid constituents, namely $\sim \overset{\circ}{A}$}, particles of size $R\sim1-10\,\mu m$ moving in a fluid. The trick of the separation between time scales is based on the mesoscopic nature of brownian particles: on one hand we treat them as macroscopic objects and in this sense \textit{dissipation} is described using \textbf{Stoke's law} which states:
+\begin{eqnarray}
+\Vec{F}=m\frac{d\Vec{v}}{dt}=-\Tilde{\gamma}\Vec{v}\overset{(*)}{=}-6\pi\eta R\Vec{v} \\
+\end{eqnarray}
+where $\Tilde{\gamma}$ is the \textit{friction coefficient}. In the Stoke's regime we can express the friction coefficient with the viscosity $\eta$ and the size of browninan particles; (*) works with spherical particles assumption only.
+
+We can observe that ${\Tilde{\gamma}}/{m}$ is just the inverse of a time scale (that we will call $\mathbf{t_d:=\frac{m}{\title{\gamma}}}$) (\textit{dissipation timescale}, typical time in which dissipation takes place). 
+\begin{eqnarray}
+\frac{d\Vec{v}}{dt}=-\frac{\Tilde{\gamma}}{m}\Vec{v} 
+\end{eqnarray}
+Using the Stoke's relation for the friction coefficient we can write that (using the water's viscosity):
+\begin{eqnarray}
+t_d=\frac{m}{6\eta\pi R} \sim \mathcal{O}(10^{-7})\,s
+\end{eqnarray}
+as we can see $t_d>>\tau$ so the typical time in which dissipation takes place is much larger than the typical time between two subsequent collisions of the brownian particles.
+Again, the idea is the same we have to deal with particles whose size is much bigger than the fluid's constituents and the key is the separation between the two timescales.
+
+
+\text{To be explicit}: 
+\[
+\begin{cases}
+  t>>t_d \qquad \text{\textbf{Diffusive regime}}\\
+  t<<t_d \qquad \text{\textbf{Balistic regime}}
+\end{cases}
+\]
+
+To sum up: brownian motion and diffusive behaviour emerges because the two scales are separated. We can describe these equations in a macroscopic way and somehow the emergence of brownian motion/random walk behaviour for a physical brownian particle is an example of a \textit{emergent behaviour}.
+
+
+
+
+
+
+
+
+\end{document}

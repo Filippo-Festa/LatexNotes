@@ -1,0 +1,296 @@
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+
+\lesson{7}{15/10/20}
+\section{Normalization of eigenvectors of a stochastic matrix}
+We were talking of MCs and of the convergence to the stationary distribution $\Bar{w}^{(1)}$, where $\Bar{w}^{(1)}$ is the right eigenvector of the stochastic matrix $W$ with $\lambda=1$:
+\begin{eqnarray}
+W\Bar{w}^{(1)}=\Bar{w}^{(1)}
+\end{eqnarray}
+For a general initial condition of the stochastic vector at $t=0$ we can express $\Vec{p}(0)$ as a linear combination over the eigenvectors of the stochastic matrix,
+\begin{eqnarray}
+\Vec{p}(0)=\sum_k \alpha_k \Bar{w}^{(k)}
+\end{eqnarray}
+such that, for $t\to\infty$, we get:
+\begin{eqnarray}
+\Vec{p}(t)=W^t\Vec{p}(0)\underset{t\to \infty}{\to} \alpha_1 \Bar{w}^{(1)}
+\end{eqnarray}
+But what about the normalization? What is the value of $\alpha_1$?
+
+In order to be consistent with what we've said $\alpha_1=1$ and now we will explain why. \\
+
+In general the stochastic matrix is not symmetric and for this reason is not granted that we actually find (thinking about the finite case, $N\times N$ matrix) $N$ eigenvectors: just the fact we wrote a linear combination in terms of $N$ eigenvectors is not granted.
+
+Theorems about the convergence to the stationary distribution can be proven also in these cases and in general if there is at least a second eigenvector with a second eigenvalue which is smaller than 1 then the time scale of convergence is anyway given by the mechanism that we saw in the last section.
+
+The second point is how we defined the $\alpha_k$ coefficients: in general if $W$ is asymmetric the eigenvalues/eigenvectors can be complex and therefore we need to be careful to the order in which we write the scalar product, the $\alpha_k$ coefficients are defined as the projection of the initial condition on the \textit{left eigenvector}
+
+\begin{eqnarray}
+\alpha_k \overset{(a)}{=} \Vec{w}^{(k)}_l \cdot \Vec{p}(0)=\sum_i (w_{l,i}^{(k)})^*p_i(0)
+\label{eq:alpha}
+\end{eqnarray}
+
+Where in (a) we used the usual vectors orthonormalization:
+\begin{align}
+    \Vec{w}_l ^{(k)}\cdot w^{(j)}=\delta_{k,j}
+    \label{eq:ON}
+\end{align}
+
+apparently there is a conflict between the orthonormalization condition (a) and the fact that $\Bar{w}^{(1)}$ is a  stochastic vector, therefore there is another normalization condition: 
+\begin{eqnarray}
+\sum_i w_i^{(k)}\overset{!}{=}1
+\label{eq:ON_prob}
+\end{eqnarray}
+
+How may we proceed now?
+
+For the largest eigenvalue $\lambda^{(1)}=1$ is easy to show that the left eigenvector is such that all its components are equal to one:
+\begin{eqnarray}
+\boxed{w_{l,j}^{(1)}=1}
+\end{eqnarray}
+And this is how you prove, for any stochastic matrix, that there is at least one stationary state distribution with eigenvalue 1. \\
+
+To do that let's prove the following equation:
+\begin{eqnarray}
+\sum_i w_{l,i}^{(1)}W_{i,j}=w_{l,j}^{(1)}
+\end{eqnarray}
+This is the equation that holds for a left eigenvector corresponding to eigenvalue 1, but if all components are equal to 1 we get the normalization condition for a given column of the stochastic matrix and we get:
+\begin{eqnarray}
+\sum_i W_{ij}=1
+\end{eqnarray}
+The we can go back to the normalization condition (\ref{eq:ON}) to write the linear combination but now this means that:
+\begin{align}
+    \sum_i \underbrace{(w_{l,i}^{(1)})^*}_{=1}\cdot \,w_i^{(1)}=\sum_i w_i^{(1)}\overset{(\ref{eq:ON_prob})}{=}1
+\end{align}
+In this way we've shown that the normalization of the right eigenvectors as probability vectors is consistent with the usual ON condition (\ref{eq:ON}). \\
+
+The final point is to compute $\alpha_1$ using (\ref{eq:alpha}) and knowing that all components of the left eigenvector are equal to 1:
+
+\begin{eqnarray}
+\alpha_1=\sum_i p_i(0)=1
+\end{eqnarray}
+
+For more informations about Markov chains: \texttt{Markov\_chain\_notes.pdf}.
+
+\chapter{Linear response theory and transport phenomena}
+\section{Detailed balance and Einstein relation}
+In this section we want to show the connection between detailed balance, microscopic reversibility and thermodynamic equilibrium in the context of Langevin equation with a conservative force (with an external potential $U(x)$).
+
+We can write the Langevin equation in this way:
+\begin{eqnarray}
+m \overset{..}{x}(t)=-U'(x)-\Tilde{\gamma}\overset{.}{x}(t)+\title{\eta}(t) 
+\end{eqnarray}
+where $\tilde{\gamma}$ is the friction coefficient and the noise obeys the conditions:
+\begin{eqnarray}
+\mean{\Tilde{\eta}(t)}=0; \quad \mean{\Tilde{\eta}(t)\Tilde{\eta}(t')}=\Tilde{\Gamma}\delta(t-t')
+\end{eqnarray}
+so noise at different times are not correlated, while $\tilde{\Gamma}$ is a measure of the amount of noise\footnote{$\tilde{\gamma}$ and $\tilde{\Gamma}$ are related through the Einstein relation: $\Tilde{\Gamma}=2\tilde{\gamma }T$.}. \\
+
+For simplicity we will use the formalism for a discrete state space but we will keep using continuous time (since we're dealing with time derivatives). Let's now state a more general condition for detailed balance with respect the one we have seen yet: under time reversal we need to change the sign of the momentum vector $\Vec{p}\,\overset{\text{time reversal}}{\longrightarrow} -\Vec{p}$. \\
+
+We will refer to:
+\begin{itemize}
+    \item state $\alpha \, \to \, (x.p)$ as a state defined by \textit{position} and \textit{momentum};
+    \item state $\beta \, \to \, (x',p')$ as a state defined by \textit{position} and \textit{momentum};
+\end{itemize}
+but under time reversal we will consider states:
+\begin{itemize}
+    \item $\alpha^* = (x,-p)$;
+    \item $\beta^* = (x',-p')$.
+\end{itemize}
+Then, considering the probability of going from state $\alpha$ to state $\beta$ in forward dynamics, the detailed balance condition becomes:
+
+\begin{eqnarray}
+\boxed{p_{\alpha}W_{\beta,\alpha}=\rho_{\beta^{*}}W_{\alpha^*,\beta^*}}
+\end{eqnarray}
+
+So the probability of going from state $\alpha$ to state $\beta$ in forward dynamics must be the same of going back from state $\beta$ to state $\alpha$ considering backward dynamics. In the context of MC we didn't have velocities or momenta and we didn't have to change the definition of states under time reversal. \\
+For $dt<<1$:
+
+\begin{numcases}{}
+x(t+dt)=x(t)+\frac{p}{m}dt & \\
+p(t+dt)=p(t)-U'(x)dt - \frac{\Tilde{\gamma}}{m}p(t)+dW 
+\label{eq:motion}
+\end{numcases}
+
+It's important to observe that the first line of (\ref{eq:motion}) is just deterministic, while the stochastic term enters in the second line and it is defined as:
+\begin{align}
+    dW=\int_{t}^{t+dt}\Tilde{\eta}(t)dt \qquad \text{\textit{Wiener process}}
+\end{align}
+
+The only relevant point of a Wiener process is that $dW$ is a gaussian stochastic variable with \textbf{zero average and \textbf{variance $\bm{\Tilde{\Gamma}dt}$}}. 
+We will now use this in order to write down an explicit expression for the transition rates. \\
+The \textit{forward  transition} $\alpha\to\beta$ is composed by two parts, one for the positions and one for the momenta; the first one is deterministic, while the second is stochastic and sampled from a normal distribution:
+
+\begin{align}
+    W_{\beta,\alpha}=\underbrace{\delta(x'-x-\frac{p}{m} dt)}_{\text{Deterministic part}}\cdot \frac{1}{\sqrt{2\pi\Tilde{\Gamma}dt}}\exp(-\frac{\overbrace{{(p'-p+U'(x)dt+\Tilde{\gamma}\frac{p}{m} dt)}^{2} }^{dW\, \text{(from (\ref{eq:motion}))}}}{2\Tilde{\Gamma} dt})
+\end{align}
+
+Now we want to express a similar equation for the \textit{backward transition} $\beta^*\to\alpha^*$ reversing the sign of the momenta in the equation (the first gaussian part stays the same because we have to invert $p\mapsto p'$ and then change the sign):
+
+\begin{align}
+    W_{\alpha^*,\beta^*}={\delta(x-x'+\frac{p'}{m} dt)}\cdot \frac{1}{\sqrt{2\pi\Tilde{\Gamma}dt}}\exp(-\frac{{(p'-p+U'(x')dt-\Tilde{\gamma}\frac{p'}{m} dt)}^{2} }{2\Tilde{\Gamma} dt})
+\end{align}
+
+The differences between positions and momenta in the previous equations are of the order of:
+
+\begin{eqnarray}
+x'-x\sim dt; \quad p' - p \sim \sqrt{dt}\,\, (\sim dW)
+\end{eqnarray}
+
+Let's finally write an equation for the following ratio (remember that we want to recover detailed balance condition):
+
+\begin{align}
+    \frac{W_{\beta\alpha}}{W_{\alpha^*\beta^*}}\overset{?}{=} (\frac{p_{\beta^*}}{p_{\alpha}})= \exp{\frac{\Tilde{\gamma}}{\Tilde{\Gamma}}  (\underbrace{\frac{p^2-p'^2}{2m}}_{\sim \sqrt{dt}} -\frac{2p}{m}U'(x)dt + \dots)}
+    \label{eq:ratio}
+\end{align}
+
+In the second term of the exponential we can see an explicit dependence on $dt$, while the first term scales as $\sqrt{dt}$. We neglect terms of order at least $\mathcal{O}(dt^{\frac{3}{2}})$.
+
+We can rewrite the second term as follows:
+\begin{eqnarray}
+\frac{p}{m}U'(x)dt=\cancel{\textcolor{red}{\frac{p}{m}}}\frac{U(x+dx)-U(x)}{\cancel{\textcolor{red}{dx}}} \cancel{\textcolor{red}{dt}}=U(x')-U(x)
+\label{eq:pot_en}
+\end{eqnarray}
+What is the energy in my state $\alpha$?
+\begin{eqnarray}
+E(\alpha)=\frac{p^2}{2m}+U(x)
+\end{eqnarray}
+
+We can clearly see that the first term of the ratio (\ref{eq:ratio}) is related to the kinetic energy difference between the two states and the second term is due to the difference of potential energy, as we can see from (\ref{eq:pot_en}).
+
+Obviously under time reversal the energy of the states don't change and:
+\begin{numcases}{}
+E(\alpha^*)=E(\alpha) \\
+E(\beta^*)=E(\beta)
+\end{numcases}
+
+Eventually what happens is that we can write the ratio between transition rates as:
+\begin{eqnarray}
+    \frac{W_{\beta\alpha}}{W_{\alpha^*\beta^*}}= \exp{\frac{2\Tilde{\gamma}}{\Tilde{\Gamma}}(E(\alpha)-E(\beta))}=
+\end{eqnarray}
+
+
+and in order to highlight the fact that we derived detailed balance in the context of Langevin equation, related to the invariance under time reversal of the equation of motion, we state that the previous ratio is equal to:
+
+\begin{align}
+    = \frac{p_{\beta^*}}{p_{\alpha}}
+\end{align}
+
+where $p_{\alpha}$ is the Boltzmann distribution provided the fact that:
+\begin{align}
+    p_{\alpha}(x,p) \,\,\alpha\, \exp{-\frac{E(\alpha)}{k_B T}} \quad \iff \quad \boxed{k_B T = \frac{2\tilde{\gamma}}{\tilde{\Gamma}}}
+\end{align}
+which is again the Einstein equation. \\
+
+What we saw us that the detailed balance condition is connected to microscopic reversibility and this is relation to the condition of equilibrium of thermodynamic equilibrium, provided the Einstein condition holds.
+
+\section{Fluctuation - dissipation relations}
+One key point of this topic is having equations or relations that connect on one side \textit{transport coefficients} and on the other side \textit{current-current equilibrium auto-correlation function}: one has to consider the auto-correlation function between some current flowing in the system at different times and then take the equilibrium average of this AC function. This results in a general way to define/compute transport coefficients.
+
+Some example are:
+\begin{itemize}
+    \item diffusion coefficients $\Longleftrightarrow$ particle current;
+    \item thermal conductivity $\Longleftrightarrow$ energy (heat) current;
+    \item magnetic susceptibility $\Longleftrightarrow$ magnetization current;
+    \item viscosity $\Longleftrightarrow$ momentum current.
+\end{itemize}
+
+A general thermodynamic formalism based on Langevin and/or Fokker Plank to describe the fact of \textit{thermal noise}. In particular (very relevant in the context of hydrodynamics) we will deal with \textit{continuity equations\footnote{We have already seen how to write the FP equation as a continuity equation.}} and \textit{conserved quantities}. \\
+
+The final important point is the general idea behind the \textit{linear response}: in LRT we are considering how our system respond to \textbf{small perturbations} (in the limit of vanishing small perturbations). \\
+
+The idea is to perturb the system in order to become globally out of equilibrium but, since the perturbation is small, locally we can use equilibrium relations.
+
+The central point/main result of LRT is that
+\begin{center}
+\textbf{the response to small perturbations will be equal related to the response to thermal fluctuations in (thermodynamic) equilibrium} 
+\end{center}
+and this allows us to eventually write what are known as fluctuation - dissipation relations because we are able to connect quantities that are defined out of equilibrium (dissipation) and quantities that re defined in equilibrium (equilibrium averages, current-current auto-correlation functions\dots)
+
+\subsection{Kubo relation}
+The Kubo relation is the first simple example FD relation involving a current and - we are in the context of a Brownian particle -  involves the diffusion coefficient on one hand and the velocity-velocity auto-correlation function on the other hand.
+
+Starting from the FP equation for a free brownian particle (in 1d):
+\begin{align}
+    \derpars{t}p(x,t)=D\derparstwo{x}p(x,t)
+    \label{eq:fpp}
+\end{align}
+where $D$ is assumed to be constant. 
+
+We already saw that the average mean squared distance from the initial point:
+\begin{eqnarray}
+    \mean{x^2(t)}-\mean{x^2} \overset{t\to\infty}{\longrightarrow} 2Dt
+\end{eqnarray}
+Let's manipulate (\ref{eq:fpp}) by multiplying it by $x^2$ and integrating it over $dx$:
+\begin{align}
+   \derpars{t}\int_{-\infty}^{+\infty}x^2p(x,t)dx &= D\int_{-\infty}^{+\infty}x^2\frac{\partial^2}{\partial x^2}p(x,t)dx \\
+   \derpars{t}\mean{x^2(t)} &\overset{(b)}{=} 2D\int_{-\infty}^{+\infty}p(x,t)dx \overset{(c)}{=}2D \\
+   \derpars{t}\mean{x^2(t)} &= 2D
+   \label{eq:exact}
+\end{align}
+So on the left side of the equation we got an (equilibrium) ensemble average of $x^2$ and in (b) we used an integration by parts assuming that:
+\begin{eqnarray}
+    x^2\derpars{t}p\overset{x\to\pm\infty}{\longrightarrow}0 \quad x^2\derparstwo{x}p \overset{x\to\pm\infty}{\longrightarrow}0 
+\end{eqnarray}
+while the passage in (c) is due to the normalization of the probability distribution.
+
+This means, by integrating over time (\ref{eq:exact}):
+\begin{eqnarray}
+    \mean{x^2(t)}=\mean{x^2(0)}+2Dt
+\end{eqnarray}
+i.e. the variance of the initial distribution increases linearly with the increasing of time, only if the initial condition is a delta function then the MSD is equal to $2Dt$.
+
+Let's now rewrite $x(t),x^2(t)$ such that:
+\begin{eqnarray}
+x(t)=\int_0^{t}dt'v(t') \quad \And \quad x^2(t)=\int_0^{t}dt' v(t')\int_0^{t}dt''v(t'')
+\end{eqnarray}
+Let's now consider:
+\begin{eqnarray}
+\derpars{t}x^2(t)=2\int_0^{t}dt'v(t')v(t)
+\end{eqnarray}
+Let's now take the average (where by $\mean{.}$ we mean equilibrium thermodynamic average):
+\begin{align}
+\derpars{t}\mean{x^{2}(t)}&=2\int_0^{t}dt'\mean{v(t')v(t)} \\
+&\overset{(c)}{=}2\int_0^t dt'\mean{v(0)v(t-t')}
+\end{align}
+where in (c) we remind that at equilibrium we have time translation invariance, so we subtract $t'$ to the argument of the mean and, by defining $\tau:=t-t'$ we get:
+\begin{eqnarray}
+\derpars{t}\mean{x^2(t)}=2\int_0^t d\tau\mean{\underbrace{v(\tau)v(0)}_{\text{A-C function}}}
+\end{eqnarray}
+This is a second way in which we can express the time derivative of the average of MSD: comparing it with (\ref{eq:exact}) we conclude that
+\begin{eqnarray}
+D=\int_0 ^t d\tau\mean{v(\tau)v(0)}
+\end{eqnarray}
+In the context of FP this would be and exact equation but more generally it becomes the \textbf{Kubo relation}:
+\begin{eqnarray}
+\boxed{D=\lim_{t\to\infty}\int_0 ^t d\tau\mean{v(\tau)v(0)}}
+\end{eqnarray}
+and in this way it holds not only for FP but also in the context of Langevin equation; in fact with FP
+we are always describing the diffusion regime whereas in Langevin we get to the diffusive regime only asymptotically (in a short time only ballistic regime).
+
+This is important also in practise because this kind of relation is actually used in numerical simulations to measure the diffusion coefficient starting from the velocity-velocity A-C function. \\
+
+The Kubo relation provides us a way to estimate the diffusion coefficient using the average of the current-current A-C function at different times (which in the case of particles' currents coincide with velocities).
+
+\section{Generalized brownian motion}
+So far, whenever we're dealing with FP of Langevin we were always describing a brownian particle: the point is that, in the same framework, we can describe the time evolution driven by thermal fluctuations of \textit{any} microscopic thermodynamic observable $\mathcal{X}$.
+
+Thermal fluctuations means that we are at (or close to, considering small perturbations) thermal equilibrium at temperature $T$. This approach can be justified rigorously (we won't do that).
+
+Now we will describe how $\mathcal{X}(t)$ fluctuates in time and if we are at equilibrium, these fluctuations will be centered under some equilibrium value, called $\mathcal{X}^*$. \\
+
+In general thermal equilibrium is archived in any system because there are interactions with microscopic particles (thermal bath) and the conceptual point is that equilibrium is archived through interactions with a very large number of microscopic degrees of freedom, typically of the order of $N_A\sim 10^{23}$.
+
+The kind of fluctuations that we want to describe (in the generalized brownian motion approach) vanish in the thermodynamic limit:
+\begin{align}
+    \Delta\mathcal{X}=|\mathcal{X}-\mathcal{X}^*| \sim \frac{1}{\sqrt{N}}
+\end{align}
+This is due to central limit theorem because we treat the interactions with microscopic degrees of freedom as originating from independent stochastic variables and therefore there are many of them, allowing us to apply the CLT.
+
+An interesting conclusion is that \textbf{generalized brownian motion is} \textbf{possible only for finite systems}: for an infinite size system there are no fluctuations due to thermal noise\footnote{A field that became very popular is the stochastic thermodynamics: the smaller the systems, the larger the effects of stochasticity if we deal with thermodynamics.}.
+
+
+\end{document}

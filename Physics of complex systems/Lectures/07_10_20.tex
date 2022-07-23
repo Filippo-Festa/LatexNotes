@@ -1,0 +1,205 @@
+%&latex
+%
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+
+\section{Langevin equation and FP approach}
+\lesson{3}{07/10/2020}
+\subsection{The Langevin equation}
+There are two theoretical ways to deal with the description of brownian particles: the first one is the Langevin equation.
+\begin{eqnarray}
+m\frac{dv_i}{dt}=-\underbrace{\Tilde{\gamma}v_i(t)}_{\text{\textbf{I}}}+\underbrace{\Tilde{\eta_i}(t)}_\text{\textbf{II}}
+\end{eqnarray}
+where \textbf{I} is the term referred to the \textit{macroscopic dissipation}, while \textbf{II} is the term referred to the \textit{stochastic microscopic noise term}.
+What we know about the noise $\eta$ is that:
+\begin{eqnarray}
+\mean{\Tilde{\eta_i}(t)} = 0 
+\end{eqnarray}
+\begin{eqnarray}
+\mean{\Tilde{\eta_i}(t)\Tilde{\eta_j}(t')} &= \Tilde{\Gamma} \delta_{ij}\delta(t-t') 
+\end{eqnarray}
+which means that the noise is different from zero only if we are dealing with the same component and at the same time. Let's now introduce some rescaled variables:
+\begin{eqnarray}
+\text{where} \qquad \gamma:=\frac{\Tilde{\gamma}}{m}; \qquad \eta_i:= \frac{\Tilde{\eta_i}}{m}; \qquad \Gamma:=\frac{\Tilde{\Gamma}}{m^2}
+\end{eqnarray}
+Now we can rewrite the Langevin equation in a more compact way, without the mass of the particle entering the equation:
+\begin{eqnarray}
+\frac{dv_i}{dt}=-\gamma v_i(t)+\eta_i(t); \quad \mean{\eta_i(t)}=0\,\vee\, \mean{{\eta_i}(t){\eta_j}(t')} &= {\Gamma} \delta_{ij}\delta(t-t') 
+\end{eqnarray}
+It is important to stress that, when we take the average of the noise, we average \textit{over different realizations of the system} (realizations in the sense of stochasticity).
+For a given realization I chose some explicit value for the stochastic variable $\eta$, then I repeat this over a different realization. \\
+
+One can formally integrate the Langevin equation. A formal solution can be written in this way (starting the integral from 0):
+\begin{eqnarray}
+v_i(t)=\exp(-\gamma t)[v_i(0)+\int_0^t d\tau \exp(\gamma \tau)\eta_i(\tau)]
+\end{eqnarray}
+Taking the average velocities over the different realizations (i.e. over noises) we get:
+\begin{align}
+    \mean{v_i(t)}&= v_i(0)\exp(-\gamma t) \\
+    \mean{v_i ^2(t)} &= v_i ^2(0)\exp(-2\gamma t) + \frac{\Gamma}{2\gamma}[1-\exp(-2\gamma t)] \\
+    &\overset{t\to \infty}{\longrightarrow}\frac{\Gamma}{2\gamma} \label{eq:miao}
+\end{align}
+
+Now we can relate this result to the behaviour at the thermodynamic equilibrium: assuming that asymptotically my system reaches thermodynamic equilibrium, we can use the equipartition theorem, which states that: \footnote{Remember that $k_B$ is set to 1 for all the entire course!}
+\begin{eqnarray}
+\mean{\frac{1}{2}mv_i^2(t)}=T/2
+\label{eq:EQPT}
+\end{eqnarray}
+
+By comparing (\ref{eq:miao}) and (\ref{eq:EQPT}) we can get a relation between the $\Gamma$ parameter and the temperature:
+\begin{eqnarray}
+\frac{m\Gamma}{2\gamma} = T \quad \implies \quad \Gamma=\frac{2\gamma}{m}T \quad \implies \quad {\Tilde{\Gamma}= 2\Tilde{\gamma} T}
+\end{eqnarray}
+
+This kind of relation is a first example of \textbf{fluctuation-dissipation relation}: the idea is that this relation connects \textit{dissipation} (the friction coefficient $\Tilde{\gamma}$) and \textit{thermal fluctuation at equilibrium} $\Tilde{\Gamma}$ (strenght of the noise). To derive this the assumption of thermal equilibrium was crucial. \\
+
+Let's now compute the MDS (more precisely the MDS part related to the i-th component:
+
+\begin{align}
+\mean{(x_i(t)-x_i(0))^2}&=\mean{[\int_0^t v_i(\tau)d\tau]^2}= \\
+&=(v_i(0)^2 - \frac{\gamma}{2\gamma})[\frac{1-\exp(-\gamma t)}{\gamma}]^2+\frac{\Gamma}{\gamma^2}t -\\
+&-\frac{\Gamma}{\gamma^3}(1-\exp(-\gamma t))
+\end{align}
+
+What is relevant here is that we can clearly see the two different regimes:
+
+\begin{itemize}
+    \item $\sim v_i^2(0)t^2$ \quad \textcolor{red}{BALLISTIC REGIME\footnote{Taylor expanding the exponential terms we get that distance is scaling linearly with time depending on the initial velocity.}} \quad $t<<t_d=\frac{1}{\gamma}$
+    \item $\sim \Gamma/\gamma^2 t:=2Dt$ \quad \textcolor{red}{DIFFUSIVE REGIME\footnote{All the exponential terms go away and the leading term is the one which is linear in time (the second one): asymptotically the MSD is linear in time and so distance scales as the square root of time.}} \quad $t>>t_d$
+\end{itemize}
+\begin{eqnarray}
+D=\frac{\Gamma}{2\gamma^2}=\frac{T}{\gamma}m = \frac{T}{\Tilde{\gamma}}
+\end{eqnarray}
+where $D=\frac{T}{\Tilde{\gamma}}$ is the \textbf{Einstein relation}. \\
+
+One formally defines the diffusion coefficient $D$ as:
+\begin{eqnarray}
+\lim_{t \to \infty} \frac{\mean{(\Vec{x}(t) - \Vec{x}(0))^2}}{t}=2dD
+\end{eqnarray}
+
+\subsection{Langevin equation with an external conservative force}
+Let's now consider an extension of the Langevin equation in the presence of a conservative force. As we know if a force is conservative (not necessarily uniform) $\Vec{F}(\Vec{x})=-\Vec{\nabla}U(\Vec{x})$, where $U$ is a potential energy and essentially now we will introduce the position $x$ (previously the Langevin equation was a differential equation fro the velocities):
+\begin{eqnarray}
+m\frac{d\Vec{v}}{dt}=m\frac{d^2\Vec{x}}{dt^2}=-\Vec{\nabla}U(\Vec{x})-\Tilde{\gamma}\frac{d\Vec{x}}{dt}+\Tilde{\eta}(t)
+\end{eqnarray}
+
+The fluctuations due to the thermal noise is the case of a brownian particle are provided by microscopic collisions of the particle with the constituents of the fluids [thermal fluctuations] and those fluctuations are described using the stochastic (noise term)/force $\eta$.
+
+\subsection{Fokker Plank approach}
+In this case the idea of dealing with stochasticity is to deal with probability distribution for the position of the brownian particles at time t $p(\Vec{x},t)$ PDF IN $\Vec{x}$ at time t. Once we know this PDF we can sample it and in this way we can sample different realization of our system. \\
+
+\textit{Notation}: with $W(\Vec{x},t | \Vec{x}',t+\Delta t)$\;\footnote{$W(\text{Starting point} | \text{arrival point})$} we describe a conditional probability: it is the probability of getting to position $\Vec{x}'$ at time $t+\Delta t$ given condition to the fact that at time $t$ my particle was in position $\Vec{x}$. \\
+
+We can use this conditional probability to calculate the \textit{transition rate} $R(\Vec{x}',\Vec{x})$ \; \footnote{Switched order: $R(\text{arrival point|\text{starting point}})$} [$s^{-1}$].
+\begin{eqnarray}
+R(\Vec{x},\Vec{x}')=\lim_{\Delta t \to 0} \frac{1}{\Delta t} W(\Vec{x},t | \Vec{x}',t+\Delta t)
+\end{eqnarray}
+
+\medskip
+
+This rate is a PDF in $\Vec{x}'$, even if it is an object in $\Vec{x}'$ and $\Vec{x}$ because is a PDF considered over the possible arriving points: it originates from a conditional probability so $\Vec{x}$ is somehow fixed but I can consider all possible arrival points (not clear). \\
+
+I can use these rates to write a \textit{master equation}: I want to write an equation for the rate of change of my PDF $p(\Vec{x},t)$ on how the PDF is changing in time and then I can use my transition rates to write the following equation. The point is that I will have two different terms: the \textbf{gain term}, meaning that the rate of change of the probability of finding the particle in $\Vec{x}$ is increasing from processes where the particle is coming from $\Vec{x'}$ to $\Vec{x}$:. This describes a rate transition from $\Vec{x}'$ to $\Vec{x}$: this is the gain term, I integrate over all the starting points. Now $\Vec{x'}$ is the starting point, while $\Vec{x}$ is the arrival point.
+
+On the other hand the \textbf{loss term} were we deal with particles that leave $\Vec{x}$ and go to $\Vec{x}'$. In this case I am integrating all over the possible arrival points.
+\begin{eqnarray}
+\frac{\partial p(\Vec{x},t)}{\partial t}= \int d^3x' \underbrace{[p(\Vec{x}',t)R(\Vec{x},\Vec{x}')}_\text{{Gain term}}-\underbrace{p(\Vec{x},t)R(\Vec{x}',\Vec{x})}_{\text{Loss term}}]
+\end{eqnarray}
+
+The way the FP equation is derived is based on the assumption that the rates are practically non zero only for small values of $\Vec{\chi}:=\Vec{x}'-\Vec{x}$. 
+
+This is reasonable: the probability of growing from $\Vec{x}$ to $\Vec{x}'$ per unit time will be smaller when the distance between the two points involved in the transition becomes larger. \\
+
+Therefore the idea is to Taylor expand the gain term around $\Vec{\chi}=0$ (zero movement) up to the second order:
+\begin{eqnarray}
+\frac{\partial p(\Vec{x},t)}{\partial t}=-\sum_i \frac{d}{dx_i}(a_i(\Vec{x})p(\Vec{x},t))+\frac{1}{2}\sum_{ij}\frac{\partial^2}{\partial x_i\partial x_j}(b_{ij}(\Vec{x})p(\Vec{x},t))
+\end{eqnarray}
+The zero order expansion cancels the loss term and one is left with the first and second order expansion terms.
+Formally I can relate the quantities $a,b$ to the transition rates such that:
+\begin{eqnarray}
+a_i(\Vec{x})=\int d^3\chi R(\Vec{x}',\Vec{x})\chi_i \\
+b_{ij}(\Vec{x})=\int d^3\chi R(\Vec{x}',\Vec{x}) \chi_i \chi_j
+\end{eqnarray}
+If we consider as example a brownian particle,
+$\Delta x_i=\chi_i$ is the displacement and the factor $a$ is defined as $\Vec{a}=\frac{\mean{\Delta\Vec{x}}}{\Delta
+t}$: it's the average displacement per unit of time.
+
+In the general formulation $\vec{a}, b_{ij},R$ could also depend on the time $t$. In the brownian particle case I don't have a dependence on time nor a dependence from $\vec{x}$ and the quantity $\vec{a}$ is uniform and constant (see the following example, $a$ is not always uniform and constant).
+
+Similarly, $b_{ij}=\frac{\mean{\Delta x_i \Delta x_j}}{\Delta t}$ is the average squared displacement per
+unit of time. 
+
+How do we relate these quantities to real physical quantities?
+
+If we think about brownian particles subjected to gravity, we have an uniform constant force $\vec{F}_0=-m\vec{g}$, therefore the average displacement $\vec{a}$ is just the \textit{sedimentation speed} (or \textit{drift velocity}):
+\begin{eqnarray}
+\vec{a}= \vec{v_0}=\frac{\vec{F_0}}{\Tilde{\gamma}} 
+\end{eqnarray}
+On the other hand we can relate the quantity $b_{ij}$ to the diffusion coefficient: if we assume an homogeneus and isotropic medium then we can say that
+\begin{eqnarray}
+b_{ij}=2 \delta_{ij}D
+\end{eqnarray}
+
+In this simple example (constant uniform force + isotropic and homogeneus solvent) the FP equation is:
+\begin{eqnarray}
+\frac{\partial p (\vec{x},t)}{\partial t}= -\vec{v_0}\cdot\vec{\nabla} p(\vec{x},t)+D\nabla^2 p(\vec{x},t)
+\end{eqnarray}
+
+If we simplify even more, setting to zero the external force, then the FP equation becomes the standard diffusion equation:
+\begin{eqnarray}
+\frac{\partial p (\vec{x},t)}{\partial t}= D \nabla^2 p(\vec{x},t)
+\end{eqnarray}
+If we assume the initial condition [in 1d] $p(x,0)=\delta(x-x_0)$ then the solution to the diffusion equation is a gaussian profile whose variance is increasing with time:
+\begin{eqnarray}
+p(x,t)=\frac{1}{\sqrt{4\pi D t}}\exp(-\frac{(x-x_0)^2}{4D t})
+\end{eqnarray}
+As a result we can compute the average MSD:
+\begin{eqnarray}
+\mean{(x-\mean{x})^2}=\mean{x^2}-\mean{x}^2=2Dt
+\label{eq:MSD}
+\end{eqnarray}
+
+the equation we wrote down for the MSD is exact for any time $t$ but this is just because we chose properly the initial conditions: in general if we chose another non-gaussian initial conditions ($\delta$is gaussian) then what happens is that the PDF becomes a gaussian only asimptotically and therefore also this relation for the MSD (\ref{eq:MSD}) holds only asimptotically.
+This is how we deal with the diffusive behaviour of the FP case. \\
+
+Let's now go back to the more general way to write the FP equation, in order to point out an interesting property: let's derive again the fluctuation-dissipation relation in the contest of FP.
+\begin{eqnarray}
+\frac{\partial p(\vec{x},t)}{\partial t}= - \vec{\nabla}\cdot(\vec{a}(\vec{x},t)p(\vec{x},t))+\frac{1}{2}\sum_{ij}\frac{\partial^2}{\partial x_i \partial x_j} (b_{ij}(\vec{x},t)p(\vec{x},t))
+\end{eqnarray}
+Now I can write the FP in the form of a conservation law:
+\begin{eqnarray}
+\frac{\partial p}{\partial t}= -\vec{\nabla}\cdot \vec{J}(\vec{x},t)
+\label{eq:continuity}
+\end{eqnarray}
+In this way we have found the \textit{continuity equation}: the rate of change of my probability density is associated to the flow of the current $\vec{J}$, where 
+\begin{eqnarray}
+{J}_i(\vec{x},t)=a_i(\vec{x},t)p(\vec{x},t)-\frac{1}{2}\sum_j \frac{\partial}{\partial x_j}(b_{ij}(\vec{x},t)\cdot p(\vec{x},t))
+\label{eq:current}
+\end{eqnarray}
+Considering a conservative (constant but not uniform) external force $\vec{a}(\vec{x},t)= \frac{F(\vec{x})}{\Tilde{\gamma}}=\vec{v_0}(\vec{x})$ and $b_{ij}=2d\delta_{ij}$ for an isotropic/homogeneus medium.
+If the force is conservative it amits a potential $U$, so
+(\ref{eq:current}) becomes:
+\begin{eqnarray}
+\vec{J}(\vec{x},t)=\underbrace{\frac{\vec{F}(\vec{x})}{\Tilde{\gamma}}p(\vec{x},t)}_{\text{Drift current}}\qquad -\underbrace{D\vec{\nabla}p}_{\text{Diffusive current (Fick's law)}}
+\label{eq:J}
+\end{eqnarray}
+NB: there is a distincion between \textit{stationary states} and \textit{equilibrium states}.
+A \textbf{stationary condition} means that our PDF has no dependence on time: $\frac{\partial p}{\partial t}=0$, which physically is what we expect for $t\to \infty$: whatever happens to our system does not depend on time. The stationary condition for (\ref{eq:continuity}) can be expressed as a vanishing condition on the divergence of the current: $\vec{\nabla}\cdot\vec{J}=0$ \\
+
+A \textbf{(thermodynamic) equilibrium condition} is a stronger one: equilibrium condition implies that no curren s are flowing in the system, so $\vec{J}=0$; as we can see equilibrium implies stationarity. \\
+
+Let's calculate our FP approach at equilibrium (which implies that (\ref{eq:J}) must be zero) and this equation results in an expression for the probability density (whose solution is $p^*$):
+\begin{eqnarray}
+\frac{\vec{\nabla}p^*}{p^*}=\frac{\vec{F}(\vec{x})}{\Tilde{\gamma D}}= -\frac{\vec{\nabla} U(\vec{x})}{\Tilde{\gamma D}}
+\end{eqnarray}
+Being $p^*=p^*(\vec{x})$ stationary, it doesn't depend on $t$. 
+\begin{eqnarray}
+\vec{\nabla}((\ln (p^*)))=-\frac{\vec{\nabla} U}{\Tilde{\gamma} D} \implies p^*(\vec{x})=A\exp(-\frac{U(\vec{x})}{\Tilde{\gamma} D})
+\end{eqnarray}
+What we have written is nothing but the \textit{Boltzmann distribution} provided that $\Tilde{\gamma}D=k_B T= T$: in this way we are back to Einstein's relation $D=\frac{T}{\Tilde{\gamma}}$.
+
+
+
+\end{document}

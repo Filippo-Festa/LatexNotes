@@ -1,0 +1,60 @@
+\providecommand{\main}{.}
+\documentclass[12pt,a4paper]{report} %Modalità draft settata qui
+
+\input{\main/header.tex}
+
+\begin{document}
+
+\newgeometry{total={170mm,257mm}, left=20mm, top=20mm}
+%Maybe add some space there
+\begin{center}
+                \line (1,0){350} \\
+                \huge{\bfseries Physics of complex systems}\\
+                [2mm]
+                \textsc{\normalsize Prof. \textit{Antonio Trovato}}
+                \vspace{-0.5em}\\
+                \textsc{\normalsize University of Padova}\\
+                \vspace{-1em}
+                \line (1,0){350} \\
+        [0.2cm]
+        \textsc{\normalsize Written by: \textit{Giovanni Piccolo}}\\
+                \textsc{\normalsize Academic Year 2020/21}\\ 
+        {\scriptsize Compiled on \today}\\
+        [0.2cm]
+        {\scriptsize \doclicenseLongText}
+\end{center}
+
+%---Frontpage End---%
+
+\tableofcontents 
+\clearpage
+\restoregeometry
+
+\chapter{Introduction}
+\subfile{Lectures/30_09_20.tex} %1
+\subfile{Lectures/01_10_20.tex} %2
+\subfile{Lectures/07_10_20.tex} %3
+\subfile{Lectures/08_10_20.tex} %4
+\subfile{Lectures/14_10_20.tex} %5
+\subfile{Lectures/15_10_20.tex} %6
+\subfile{Lectures/21_10_20.tex} %7
+\subfile{Lectures/22_10_20.tex} %8
+\subfile{Lectures/28_10_20.tex} %9
+\subfile{Lectures/29_10_20.tex} %10
+\subfile{Lectures/04_11_20.tex} %11
+\subfile{Lectures/05_11_20.tex} %12
+\subfile{Lectures/11_11_20.tex} %13
+\subfile{Lectures/12_11_20.tex} %14
+\subfile{Lectures/18_11_20.tex} %15
+\chapter{Appendix}
+\subfile{appendix.tex}
+
+%---Bibliography---%
+%\clearpage
+%\printbibliography
+
+%---Analytical Index---%
+\printindex
+
+\end{document}
+

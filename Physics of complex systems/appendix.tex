@@ -1,0 +1,67 @@
+\providecommand{\main}{..}
+\documentclass[\main/main.tex]{subfiles}
+
+\begin{document}
+
+\section*{Appendix A: proof of (\ref{eq:nome})}
+In this appendix we want to prove that
+\begin{equation}
+    \mean{\mathbb{F}_kX_j}=-\delta_{kj}
+\end{equation}
+holds and it was used in order to show the consistency between the two ways to introduce the Onsager coefficients (one way is (\ref{eq:lcoeff})), the other one is (\ref{eq:combined})).
+
+Let's prove this equation emphasising the fact that we are working in the LR regime (very small affinities). \\
+
+Formally we can write 
+
+    **da finire 04-11**
+
+
+\section*{Appendix B: Thomson-Joule effect}
+\label{thomson}
+
+
+    **da finire 05-11**
+
+
+The Thomson-Joule effect appears when an electric current flows through a conductor with an applied temperature gradient. We consider first a conductor through which a heat current flows in the absence of an electric one. This implies that a temperature gradient sets in the conductor, where the temperature field $T(x)$ along the conductor is determined by the dependence on temperature of its kinetic coefficients. We can now perform an idealized setup, where the conductor is put in contact at each point $x$ with a heat reservoir at temperature $T(x) .$ In such conditions there is no heat exchanged between the conductor and the reservoirs. Then, we switch on a stationary electric current $j_{n}$ flowing through the conductor, thus producing a heat exchange with the reservoirs, in such a way that any variation of the energy current through the conductor has to be supplied by the reservoirs. Before switching on the electric current we know that the energy current must be conserved, i.e., $\partial_{x} j_{u}=0 .$ After the electric current is switched on, according to (2.267) we can write
+$$
+\partial_{x} j_{u}=\partial_{x} j_{q}+j_{n} \partial_{x} \mu
+$$
+because $j_{n}$ is a constant current. Using (2.265) and (2.263) we can rewrite this equation as
+$$
+\partial_{x} j_{u}=\partial_{x}\left(T \varepsilon e j_{n}+T^{2} \kappa \partial_{x} \frac{1}{T}\right)+\left(-\frac{e^{2}}{\sigma} j_{n}+T^{2} \varepsilon e \partial_{x} \frac{1}{T}\right) j_{n}
+$$
+In the adopted setup the only quantities\footnote{In principle $\kappa$ should also depend on $T$ and, accordingly, on $x$, but for sufficiently small temperature gradients, it can be assumed to be constant.} that depend on the space coordinate $x$ are $T$ and $\varepsilon,$ and we can simplify $(2.275),$ obtaining
+$$
+\partial_{x} j_{u}=T\left(\partial_{x} \varepsilon\right) e j_{n}-\kappa \partial_{x} T-\frac{e^{2}}{\sigma} j_{n}^{2}
+$$
+since in the absence of an electric current, i.e., $j_{n}=0,$ we must have $\partial_{x} j_{u}=0 ;$ the temperature field must be such that the second addendum on the right-hand side must vanish, i.e.,
+$$
+\kappa \partial_{x x} T=0
+$$
+This means that the temperature field $T(x)$ is expected to exhibit a linear dependence on the space coordinate $x$, consistently with the Fourier's law. Thus, assuming as a first approximation that the temperature profile does not change when $j_{n} \neq 0,$ we can simplify Eq. (2.276) as
+$$
+\partial_{x} j_{u}=T\left(\partial_{x} \varepsilon\right) e j_{n}-\frac{e^{2}}{\sigma} j_{n}^{2}
+$$
+On the other hand, the thermoelectric power depends on $x$ because it is a function of temperature, so we can write
+$$
+\partial_{x} \varepsilon=\frac{d \varepsilon}{d T} \partial_{x} T
+$$
+from which
+$$
+\partial_{x} j_{u}=T \frac{d \varepsilon}{d T} \partial_{x} T e j_{n}-\frac{e^{2}}{\sigma} j_{n}^{2}
+$$
+The second term on the right-hand side is the so-called Joule heat, which is produced even in the absence of a temperature gradient. The first term is the so-called Thomson heat, which has to be absorbed by the reservoirs to maintain the temperature gradient, $\partial_{x} T,$ when the electric current flows through the conductor. We can define the Thomson coefficient, $\tau,$ as the amount of Thomson heat absorbed per unit electric current $\left(e j_{n}\right)$ and per unit temperature gradient $\left(\partial_{x} T\right),$ obtaining
+$$
+\tau=T \frac{d \varepsilon}{d T}
+$$
+Making use of this definition and of Eq. ( 2.273 ) we can establish a relation between the Peltier and Thomson coefficients with the thermoelectric power,
+$$
+\frac{d \Pi_{A B}}{d T}=\left(\tau_{B}-\tau_{A}\right)+\left(\varepsilon_{B}-\varepsilon_{A}\right)
+$$
+which can be interpreted as a consequence of the energy conservation. In fact, the thermoelectric power of a junction is the result of the contributions of the heat per unit temperature and per unit electric current supplied to the junction by the Peltier and by the
+Thomson effects.
+
+
+\end{document}
